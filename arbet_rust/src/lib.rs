@@ -1,6 +1,19 @@
 use wasn_bindgen::prelude::*;
 use serde::{Deserialize, Serialize};
 
+// used for returns from calc_arb function
+pub enum RetVals{
+    ArbAvail(ArbInfo),
+    NoArb,
+}
+
+// let 
+pub struct ArbInfo {
+    pub stake_one_precentage: f64,
+    pub stake_two_percentage: f64,
+    pub profit_percentage: f64,
+}
+
 // Structs to hold incoming json
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Spread {
@@ -92,7 +105,40 @@ pub fn process_odds(data: &str, books_searched: &str) -> String {
         // push ArbReturns to arb_ret
     }
 
-
-
 }
 
+// func for getting implient probability
+pub fn calc_implied_prob(line: &i32) -> f64 {
+    let odds:i32 = *line;
+    if odds > 0 {
+        100.0 / (odds as f64 + 100.0)
+    }
+    else{
+        (-odds as f64) / ((-odds as f64) + 100.0)
+    }
+}
+
+// func to see if arb is available or not
+pub fn calc_arb(line_one: &i32, line_two: &i32) -> RetVals {
+    let prob_one: f64 = calc_implied_prob(line_one);
+    let prob_two: f64 = calc_implied_prob(line_two);
+    let total_prob: f64 = prob_one + prob_two;
+
+    if total_prob < 1.0 {
+        let stake_one: f64 = prob_one / total_prob;
+        let stake_two: f64 = 1.0 - stake_one;
+
+        let profit_percentage: f64 = (1.0 / total_prob - 1.0) * 100.0;
+
+        let arb_data: ArbInfo = ArbInfo {
+            stake_one_precentage: stake_one,
+            stake_two_percentage: stake_two,
+            profit_percentage: profit_percentage,
+        };
+
+        RetVals::ArbAvail(arb_data)
+    }
+    else{
+        RetVals::NoArb   
+    }
+}

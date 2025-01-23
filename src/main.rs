@@ -53,7 +53,7 @@ fn main() {
 
             let money_avail: f64 = buf.trim().parse::<f64>().unwrap();
 
-            println!("With ${:.2}, you should place {:.2} on Line 1 and {:.2} on Line 2 for a {:.2}% profit!",
+            println!("With ${:.2}, you should place ${:.2} on Line 1 and ${:.2} on Line 2 for a {:.2}% profit!",
             money_avail,
             money_avail * arb_data.stake_one_precentage,
             money_avail * arb_data.stake_two_percentage,
