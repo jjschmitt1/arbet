@@ -1,0 +1,78 @@
+// Structs to hold incoming json
+// #[derive(Serialize, Deserialize, Debug)]
+// struct Spread {
+//     pub book: String,
+//     pub home_odds: i32,
+//     pub home_spread: f64,
+//     pub away_odds: i32,
+//     pub away_spread: f64,
+// }
+
+// // find best home odds
+        // let max_home_spread_odds = curr_game.spread
+        //     .iter()
+        //     .enumerate()
+        //     .map(|(index, s)| (s.home_odds, index))
+        //     .max_by(|a, b| a.0.cmp(&b.0));
+
+
+        // let max_away_spread_odds = curr_game.spread
+        // .iter()
+        // .enumerate()
+        // .map(|(index, s)| (s.away_odds, index))
+        // .max_by(|a, b| a.0.cmp(&b.0));
+
+        // // -- correctly getting the both max odds --
+
+        // // send the best odds to the calc_arb function, 
+        // match (max_home_spread_odds, max_away_spread_odds){
+        //     (Some((home_odds, home_idx)), Some((away_odds, away_idx))) => {
+
+        //         match calc_arb(&home_odds, &away_odds){
+        //             RetVals::ArbAvail(data) => {
+        //                 // create home team
+        //                 let home_team : Team = Team {
+        //                     name: curr_game.home_team.clone(),
+        //                     book: curr_game.spread
+        //                         .get(home_idx)
+        //                         .map(|s| s.book.clone())
+        //                         .unwrap_or_else(||"Unknown".to_string()),
+        //                     spread: curr_game.spread
+        //                         .get(home_idx)
+        //                         .map(|s| s.home_spread.clone())
+        //                         .unwrap_or_else(|| f64::NAN),
+        //                     odds: home_odds,
+        //                     stake: (data.home_stake_percentage * 100.0)
+        //                 };
+
+        //                 let away_team : Team = Team {
+        //                     name: curr_game.away_team.clone(),
+        //                     book: curr_game.spread
+        //                         .get(away_idx)
+        //                         .map(|s| s.book.clone())
+        //                         .unwrap_or_else(||"Unknown".to_string()),
+        //                     spread: curr_game.spread
+        //                         .get(away_idx)
+        //                         .map(|s| s.away_spread.clone())
+        //                         .unwrap_or_else(|| f64::NAN),
+        //                     odds: away_odds,
+        //                     stake: (data.away_stake_percentage * 100.0)
+        //                 };
+
+        //                 let arb_opp : ArbReturns = ArbReturns {
+        //                     sport_type: curr_game.sport_type.clone(),
+        //                     bet_type: "Spread".to_string(),
+        //                     home_team: home_team,
+        //                     away_team : away_team,
+        //                     roi: data.profit_percentage
+        //                 };
+
+        //                 arb_ret.push(arb_opp);
+
+        //             }
+        //             _ => {}
+        //         }
+        //     }
+        //     _ => {}
+  
+        // }

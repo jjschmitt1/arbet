@@ -3,6 +3,9 @@ name = "arbet"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = ["arbet_rust"]
+
 [dependencies]
 arbet_rust = { path = "arbet_rust" }
 serde = { version = "1.0", features = ["derive"] }
