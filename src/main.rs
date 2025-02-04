@@ -55,29 +55,6 @@ fn main() {
 //     {
 //         "home_team": "LA Rams",
 //         "away_team": "Minnesota Vikings",
-//         "spread": [
-//             {
-//                 "book": "DraftKings",
-//                 "home_odds": "110",
-//                 "home_spread": "2.5",
-//                 "away_odds": "-118",
-//                 "away_spread": "-2.5"
-//             },
-//             {
-//                 "book": "Fanduel",
-//                 "home_odds": "-101",
-//                 "home_spread": "2.5",
-//                 "away_odds": "-118",
-//                 "away_spread": "-2.5"
-//             },
-//             {
-//                 "book": "MGM",
-//                 "home_odds": "-120",
-//                 "home_spread": "2.5",
-//                 "away_odds": "-101",
-//                 "away_spread": "-2.5"
-//             }
-//         ],
 //         "moneyline": [
 //             {
 //                 "book": "Draftkings",
@@ -99,22 +76,6 @@ fn main() {
 //     {
 //         "home_team": "Kansas City Chiefs",
 //         "away_team": "Buffalo Bills",
-//         "spread": [
-//             {
-//                 "book": "DraftKings",
-//                 "home_odds": "200",
-//                 "home_spread": "1.5",
-//                 "away_odds": "-115",
-//                 "away_spread": "-1.5"
-//             },
-//             {
-//                 "book": "Fanduel",
-//                 "home_odds": "-110",
-//                 "home_spread": "1.5",
-//                 "away_odds": "120",
-//                 "away_spread": "-1.5"
-//             }
-//         ],
 //         "moneyline": [
 //             {
 //                 "book": "Draftkings",
@@ -131,29 +92,6 @@ fn main() {
 //     {
 //         "home_team": "New York Giants",
 //         "away_team": "Philadelphia Eagles",
-//         "spread": [
-//             {
-//                 "book": "DraftKings",
-//                 "home_odds": "-115",
-//                 "home_spread": "3.5",
-//                 "away_odds": "-105",
-//                 "away_spread": "-3.5"
-//             },
-//             {
-//                 "book": "Fanduel",
-//                 "home_odds": "-108",
-//                 "home_spread": "3.5",
-//                 "away_odds": "-108",
-//                 "away_spread": "-3.5"
-//             },
-//             {
-//                 "book": "MGM",
-//                 "home_odds": "-110",
-//                 "home_spread": "3.5",
-//                 "away_odds": "-110",
-//                 "away_spread": "-3.5"
-//             }
-//         ],
 //         "moneyline": [
 //             {
 //                 "book": "Draftkings",
@@ -170,22 +108,6 @@ fn main() {
 //     {
 //         "home_team": "Dallas Cowboys",
 //         "away_team": "San Francisco 49ers",
-//         "spread": [
-//             {
-//                 "book": "DraftKings",
-//                 "home_odds": "100",
-//                 "home_spread": "0.0",
-//                 "away_odds": "-110",
-//                 "away_spread": "0.0"
-//             },
-//             {
-//                 "book": "Fanduel",
-//                 "home_odds": "105",
-//                 "home_spread": "0.0",
-//                 "away_odds": "-120",
-//                 "away_spread": "0.0"
-//             }
-//         ],
 //         "moneyline": [
 //             {
 //                 "book": "Draftkings",
@@ -202,29 +124,6 @@ fn main() {
 //     {
 //         "home_team": "Green Bay Packers",
 //         "away_team": "Chicago Bears",
-//         "spread": [
-//             {
-//                 "book": "DraftKings",
-//                 "home_odds": "-110",
-//                 "home_spread": "4.0",
-//                 "away_odds": "+105",
-//                 "away_spread": "-4.0"
-//             },
-//             {
-//                 "book": "Fanduel",
-//                 "home_odds": "-110",
-//                 "home_spread": "4.0",
-//                 "away_odds": "-110",
-//                 "away_spread": "-4.0"
-//             },
-//             {
-//                 "book": "MGM",
-//                 "home_odds": "-115",
-//                 "home_spread": "4.0",
-//                 "away_odds": "200",
-//                 "away_spread": "-4.0"
-//             }
-//         ],
 //         "moneyline": [
 //             {
 //                 "book": "Draftkings",

@@ -28,6 +28,7 @@ struct Moneyline {
 #[derive(Serialize, Deserialize, Debug)]
 struct Game {
     pub sport_type: String,
+    pub start_time: String,
     pub home_team: String,
     pub away_team: String,
     // pub spread: Vec<Spread>,
@@ -48,6 +49,7 @@ struct Team {
 #[derive(Serialize, Deserialize, Debug)]
 struct ArbReturns {
     pub sport_type: String,
+    pub start_time: String,
     pub bet_type: String,
     pub home_team: Team,
     pub away_team: Team,
@@ -126,6 +128,7 @@ pub fn process_odds(data: &str) -> String {
     
                             let arb_opp : ArbReturns = ArbReturns {
                                 sport_type: curr_game.sport_type.clone(),
+                                start_time: curr_game.start_time.clone(),
                                 bet_type: "Moneyline".to_string(),
                                 home_team: home_team,
                                 away_team : away_team,

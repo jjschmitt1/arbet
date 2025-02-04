@@ -1,5 +1,6 @@
 const { fetchData } = require('./apiClient');
 const { calculate_arbitrage } = require('./rustBridge');
+const { changeJSONFormat } = require('./formatJSON');
 const { fs } = require('fs');
 
 async function main() {
@@ -61,8 +62,11 @@ async function main() {
     // flatten into a single promise
     const flat_api_results = api_results.flat();
 
+    // change flat api results into the correct JSON format for Rust to handle
+    const final_api_results = changeJSONFormat(flat_api_results);
+
     // must have all promises resolved before sending data to rust
-    const arb_return = calculate_arbitrage(flat_api_results);
+    const arb_return = calculate_arbitrage(final_api_results);
 
     // handle arbitrage return
     if (arb_return.length === 0 ){
@@ -76,6 +80,7 @@ async function main() {
             // for each game
             console.log(`Arbitrage opportunity ${i + 1} in ${arb_return[i].sport_type}:`);
             console.log(`Bet type: ${arb_return[i].bet_type}`);
+            console.log(`Start Time: ${arb_return[i].start_time}`);
             console.log(`Place ${arb_return[i].home_team.stake.toFixed(2)}% of your money on ${arb_return[i].home_team.name} at ${arb_return[i].home_team.odds} on ${arb_return[i].home_team.book}`);
             console.log(`Place ${arb_return[i].away_team.stake.toFixed(2)}% of your money on ${arb_return[i].away_team.name} at ${arb_return[i].away_team.odds} on ${arb_return[i].away_team.book}`);
             console.log(`This opportunity yields an ROI of ${arb_return[i].roi.toFixed(2)}%\n`);
