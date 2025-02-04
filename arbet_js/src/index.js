@@ -6,92 +6,72 @@ async function main() {
 
     const args = process.argv.slice(2);
 
-    for(let i = 0; i < process.args.length; i++){
-        switch (args[i]){
-            case "-nfl":
-                // handle nfl case
-                break;
-            case "-ncaaf":
-                // handle ncaaf case
-                break;
-            case "-ncaam":
-                // handle case for ncaam (mens bball)
-                break;
-            case "-ncaaw":
-                // handle case for ncaaw (womesn bball)
-                break;
-            case "-mlb":
-                // handle case for mlb
-                break;
-            case "-euroleague":
-                // handle case for euroleague bball
-                break;
-            case "-nba":
-                // handle nba case
-                break;
-            case "-boxing":
-                // handle boxing case (can remove later)
-                break;
-            case "-nhl":
-                // handle nhl case
-                break;
-            case "-mma":
-                // handle mma case
-                break;
-            case "-prem":
-                // handle prem case
-                break;
-            case "-championship":
-                // handle championship call
-                break;
-            case "-bundes":
-                // handle bundesliga case
-                break;
-            case "-bundes2":
-                // handle bundesliga 2 case
-                break;
-            case "-bundes3":
-                // handle bundesliga 3 case
-                break;
-            case "-lig1":
-                // handle french first div case
-                break;
-            case "-seriea":
-                // handle serie A case
-                break;
-            case "-eredivisie":
-                // handle eredivise case
-                break;
-            case "-laliga":
-                // handle la liga case
-                break;
-            case "-champions_league":
-                // handle uefa champs
-                break;
-            case "-europa_league":
-                // handle europa league
-                break;
-            case "-conf_league":
-                // handle conference league
-                break;
-            case "-help":
-                // handle help case
-                helpMenu();
-                return;
-            default:
-                console.log("Invalid flag. See 'node index.js -help' for correct flags");
-                return;
+    const sportsFlags = {
+        "-nfl": "americanfootball_nfl",
+        "-ncaaf": "americanfootball_ncaaf",
+        "-ncaam": "basketball_ncaab",
+        "-ncaaw": "basketball_wncaab",
+        "-mlb": "baseball_mlb",
+        "-euroleague": "basketball_euroleague",
+        "-nba": "basketball_nba",
+        "-boxing": "boxing_boxing",
+        "-nhl": "icehockey_nhl",
+        "-mma": "mma_mixed_martial_arts",
+        "-prem": "soccer_epl",
+        "-championship": "soccer_efl_champ",
+        "-bundes": "soccer_germany_bundesliga",
+        "-bundes2": "soccer_germany_bundesliga2",
+        "-3liga": "soccer_germany_liga3",
+        "-lig1": "soccer_france_ligue_one",
+        "-seriea": "soccer_italy_serie_a",
+        "-eredivisie": "soccer_netherlands_eredivisie",
+        "-laliga": "soccer_spain_la_liga",
+        "-champions_league": "soccer_uefa_champs_league",
+        "-europa_league": "soccer_uefa_europa_league",
+        "-conf_league": "soccer_uefa_europa_conference_league"
+    };
+
+    let selectedSports = [];
+
+    for (let i = 0; i < args.length; i++){
+        if (args[i] in sportsFlags){
+            selectedSports.push(sportsFlags[args[i]]);
+        }
+        else if(args[i] === "-help"){
+            helpMenu();
+            return;
+        }
+        else{
+            console.log("Invalid flag detected. Use `-help` to see valid flags.");
+            return;
         }
     }
 
-    const api_return = await fetchData();
-    const arb_return = calculate_arbitrage(api_return);
+    if(selectedSports.length === 0){
+        console.log("No sport selected. Please select one or more sports.");
+        return;
+    }
+
+    // make calls to api for all of the sports
+    const api_promises = selectedSports.map(sport => fetchData(sport));
+
+    // wait for all promises 
+    const api_results = await Promise.all(api_promises);
+
+    // flatten into a single promise
+    const flat_api_results = api_results.flat();
+
+    // must have all promises resolved before sending data to rust
+    const arb_return = calculate_arbitrage(flat_api_results);
 
     // handle arbitrage return
     if (arb_return.length === 0 ){
         console.log("No arbitrage found! Try again later.\n");
     }
     else{
+        // sort the return array by sport type
+        arb_return.sort((a, b) => a.sport_type.localeCompare(b.sport_type));
+
         for(var i = 0; i < arb_return.length; i++){
             // for each game
             console.log(`Arbitrage opportunity ${i + 1} in ${arb_return[i].sport_type}:`);
@@ -113,7 +93,7 @@ async function saveApiCallsLeft(callsLeft) {
 
 function helpMenu() {
     console.log("Welcome to arbet! Below you will find a list of appropriate flags that can be used:")
-    console.log(`-nfl: NFL 
+    console.log(`   -nfl: NFL 
     -ncaaf: NCAA Football
 
     -ncaam: NCAA Mens Basketball
@@ -140,7 +120,7 @@ function helpMenu() {
 
     -bundes2: German Bundesliga 2 Soccer
 
-    -bundes3: German 3.Liga Soccer
+    -3liga: German 3.Liga Soccer
 
     -lig1: French Ligue Un Soccer
 
@@ -155,7 +135,7 @@ function helpMenu() {
     -europa_league: UEFA Europa League Soccer
 
     -conf_league: UEFA Conference League Soccer
-    
+
     -help: access to this help page
 
     The books we currently check are DraftKings, Fanduel, MGM, ESPN Bet and Hardrock!
