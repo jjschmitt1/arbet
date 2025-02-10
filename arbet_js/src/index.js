@@ -1,7 +1,7 @@
 const { fetchData, fetchSports } = require('./apiClient');
 const { calculate_arbitrage } = require('./rustBridge');
 const { changeJSONFormat } = require('./formatJSON');
-const { fs } = require('fs');
+const fs = require('fs');
 
 async function main() {
 
@@ -9,7 +9,7 @@ async function main() {
 
     const activeSports_response = await fetchSports();
 
-    const activeSports = activeSports_response.map((game) => game.key);
+    const activeSports = activeSports_response.data.map((game) => game.key);
 
     const sportsFlags = {
         "-nfl": "americanfootball_nfl",
@@ -79,7 +79,7 @@ async function main() {
 
     // handle arbitrage return
     if (arb_return.length === 0 ){
-        console.log("No arbitrage found! Try again later.\n");
+        console.log("No arbitrage found! Try again later.");
     }
     else{
         // sort the return array by sport type
@@ -97,12 +97,18 @@ async function main() {
     }
 
 
-    // sometime later, add functionality to track number of api calls remaining
+    const callsLeft = await fetchSports();
+    const requests_remaining = callsLeft.headers.get('x-requests-remaining');
+    saveApiCallsLeft(requests_remaining);
     
 }
 
 async function saveApiCallsLeft(callsLeft) {
-    fs.writeFile('.remaining_calls', JSON.stringify({ value: callsLeft }));
+    fs.writeFile('.remaining_calls', JSON.stringify({ value: callsLeft }), (err) => {
+        if (err) {
+            console.log("Failed to save remaining api calls data");
+        }
+    });
 }
 
 function helpMenu() {

@@ -22,7 +22,7 @@ async function fetchData(sport) {
 async function fetchSports() {
     try {
         const response = await axios.get(`https://api.the-odds-api.com/v4/sports/?apiKey=${apiKey}`);
-        return response.data;
+        return response;
     }
     catch (error){
         console.error("Error getting sports data");
