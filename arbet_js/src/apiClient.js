@@ -19,4 +19,15 @@ async function fetchData(sport) {
       }
 }
 
-module.exports = { fetchData };
+async function fetchSports() {
+    try {
+        const response = await axios.get(`https://api.the-odds-api.com/v4/sports/?apiKey=${apiKey}`);
+        return response.data;
+    }
+    catch (error){
+        console.error("Error getting sports data");
+        throw error;
+    }
+}
+
+module.exports = { fetchData, fetchSports };

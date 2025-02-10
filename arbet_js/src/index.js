@@ -1,4 +1,4 @@
-const { fetchData } = require('./apiClient');
+const { fetchData, fetchSports } = require('./apiClient');
 const { calculate_arbitrage } = require('./rustBridge');
 const { changeJSONFormat } = require('./formatJSON');
 const { fs } = require('fs');
@@ -6,6 +6,10 @@ const { fs } = require('fs');
 async function main() {
 
     const args = process.argv.slice(2);
+
+    const activeSports_response = await fetchSports();
+
+    const activeSports = activeSports_response.map((game) => game.key);
 
     const sportsFlags = {
         "-nfl": "americanfootball_nfl",
@@ -36,7 +40,12 @@ async function main() {
 
     for (let i = 0; i < args.length; i++){
         if (args[i] in sportsFlags){
-            selectedSports.push(sportsFlags[args[i]]);
+            if(activeSports.includes(sportsFlags[args[i]])){
+                selectedSports.push(sportsFlags[args[i]]);
+            }
+            else{
+                console.log(`Sport ${sportsFlags[args[i]]} is not active!`);
+            }
         }
         else if(args[i] === "-help"){
             helpMenu();
