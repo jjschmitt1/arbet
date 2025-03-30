@@ -113,7 +113,8 @@ async function saveApiCallsLeft(callsLeft) {
 
 function helpMenu() {
     console.log("Welcome to arbet! Below you will find a list of appropriate flags that can be used:")
-    console.log(`   -nfl: NFL 
+    console.log(`-nfl: NFL 
+
     -ncaaf: NCAA Football
 
     -ncaam: NCAA Mens Basketball
